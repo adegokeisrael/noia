@@ -203,9 +203,8 @@ If you use NOIA in research, please cite:
 ```bibtex
 @techreport{aitr2025noia,
   title  = {NOIA: Network Operations Intelligence Assistant},
-  author = {Asante, Kwame and Diallo, Amara and Okeke, Chidinma
-            and Al-Rashid, Yusuf and Benkhadda, Fatima Zahra},
-  institution = {African Institute of Telecommunications Research (AITR)},
+  author = {Othniel, Eniols, Israel},
+  institution = {FUTMINNA, WINEST)},
   year   = {2025},
   type   = {ITU-T FG-AINN Input Document},
   number = {FG-AINN-I-NEW}
