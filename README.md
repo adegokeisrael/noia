@@ -7,7 +7,7 @@
 
 > **Build-a-thon 2025 — ITU-T Focus Group on AI Native for Telecommunication Networks (FG-AINN)**
 >
-> *African Institute of Telecommunications Research (AITR) · University of Lagos · Cairo University*
+> *Federal University of TECHNOLOGY MINNA · WINEST research Group*
 
 ---
 
