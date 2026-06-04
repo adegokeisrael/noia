@@ -5,7 +5,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111-green)](https://fastapi.tiangolo.com/)
 [![ITU FG-AINN](https://img.shields.io/badge/ITU-FG--AINN_Submission-orange)](https://www.itu.int/en/ITU-T/focusgroups/ainn/)
 
-> **Build-a-thon 2025 — ITU-T Focus Group on AI Native for Telecommunication Networks (FG-AINN)**
+> **ITU-T Focus Group on AI Native for Telecommunication Networks (FG-AINN)**
 >
 > *Federal University of TECHNOLOGY MINNA · WINEST research Group*
 
