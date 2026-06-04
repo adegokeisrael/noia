@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --noia-blue:   #1A3C6E;
+  --noia-accent: #2B5BAE;
+  --noia-green:  #1B7C3E;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 font-sans;
+}
+
+.scrollbar-thin::-webkit-scrollbar       { width: 6px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-slate-600 rounded-full; }

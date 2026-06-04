@@ -1,0 +1,122 @@
+[
+  {
+    "id": "BQ-001",
+    "mode": "query",
+    "query": "What are the steps to restore a BGP session after a route flap on a Nokia 7750 SR router?",
+    "reference": "To restore a BGP session after a route flap on a Nokia 7750 SR: verify BGP neighbour state with 'show router bgp neighbor', check interface status, inspect hold timers, perform a soft clear with 'clear router bgp neighbor <peer-ip> soft', and validate prefix advertisement post-recovery."
+  },
+  {
+    "id": "BQ-002",
+    "mode": "rca",
+    "query": "At 02:35 UTC, PE-03 in the Lagos region generated a BGP session drop alarm for peer 10.0.1.5. Interface TenGigE0/0/1 shows CRC errors at 1200 pps. A planned maintenance window CHG-00042 completed 6 hours earlier involved a software upgrade on the same node.",
+    "reference": "The most probable root cause is interface physical layer degradation on TenGigE0/0/1 triggered by the maintenance activity, causing CRC errors that destabilised the BGP hold timer, resulting in session drop."
+  },
+  {
+    "id": "BQ-003",
+    "mode": "query",
+    "query": "How do I re-optimise an MPLS RSVP-TE LSP that is stuck in the DOWN state after a link failure?",
+    "reference": "Trigger manual LSP re-optimisation with 'mpls traffic-eng reoptimize tunnel-te <id>', verify the new explicit route, confirm bandwidth reservation, and monitor BFD and PCEP connectivity."
+  },
+  {
+    "id": "BQ-004",
+    "mode": "summarise",
+    "query": "INC-000045 P1 opened 2024-03-12 01:15 UTC. Node P-04 Nairobi optical power degradation LOS alarm. Eng. Mensah acknowledged 01:28. OTDR dispatch 02:00. Fiber break confirmed at GPS 1.2842N 36.8219E. Field crew arrived 04:30. Fiber spliced 06:15. Service restored 06:45. Downtime: 330 minutes. SLA breach: Yes, 5% credit. Lessons: pre-splice OTDR required, temperature monitoring alerts to be tightened.",
+    "reference": "P1 fiber cut on P-04 Nairobi caused 330-minute outage. Root cause: physical fiber break. Resolution: OTDR dispatch and field splice. SLA breach resulted in 5% credit. Lessons: mandatory pre-splice OTDR and tighter temperature alerting."
+  },
+  {
+    "id": "BQ-005",
+    "mode": "recommend",
+    "query": "CPU overload alarm on PE-07 Cairo. CPU utilisation at 98% for 15 minutes. BGP keepalives are being delayed. Customer SLA availability commitment is 99.99%. What should I do?",
+    "reference": "Recommended actions in order: (1) identify and rate-limit high-CPU process using 'show processes cpu', (2) reduce BGP update rate or apply route policy to limit prefix churn, (3) if CPU remains high after 10 minutes, activate traffic failover to PE-08 and escalate to L3 engineering."
+  },
+  {
+    "id": "BQ-006",
+    "mode": "query",
+    "query": "What is the permitted downtime per month for a customer with a 99.95% availability SLA?",
+    "reference": "For a 99.95% monthly availability SLA, the permitted downtime is 0.05% of 43,200 minutes (30-day month), which equals 21.6 minutes per calendar month."
+  },
+  {
+    "id": "BQ-007",
+    "mode": "rca",
+    "query": "Multiple downstream CE routers in the Accra region are reporting OSPF adjacency loss simultaneously. The upstream P-02 node logged a memory exhaustion alarm at 14:22 UTC. No maintenance was scheduled.",
+    "reference": "Memory exhaustion on P-02 caused OSPF hello packet drops, leading to simultaneous adjacency loss across all CE routers whose OSPF sessions transit P-02. Root cause: memory leak or traffic spike on P-02 requiring immediate process restart or failover."
+  },
+  {
+    "id": "BQ-008",
+    "mode": "generate_article",
+    "query": "INC-000088 resolved. Root cause: BGP session drop on PE-01 caused by misconfigured hold timer (3 seconds instead of 90 seconds) introduced during a software upgrade rollback. Resolution: corrected timer configuration via 'configure router bgp neighbor <ip> timers keepalive 30 hold-time 90', session re-established in 2 minutes. Prevention: add hold-timer validation to pre-upgrade checklist.",
+    "reference": "KB article covering BGP hold timer misconfiguration: symptoms (session drop, keepalive timeout), root cause (incorrect timer value post-upgrade), diagnostic steps (show bgp neighbor timers), resolution (reconfigure hold-time to 90s), and prevention (pre-upgrade checklist validation)."
+  },
+  {
+    "id": "BQ-009",
+    "mode": "query",
+    "query": "What alarms indicate optical power degradation on an OTN link and what are the acceptable OPR thresholds?",
+    "reference": "Optical power degradation is indicated by LOS (Loss of Signal), LOP (Loss of Pointer), OPR below threshold, and OPT transmit power alarms. Acceptable OPR range is typically -28 dBm to -8 dBm depending on transponder type; consult the relevant equipment vendor specification."
+  },
+  {
+    "id": "BQ-010",
+    "mode": "query",
+    "query": "What is the escalation path for a P1 incident that has not been resolved within 30 minutes?",
+    "reference": "For a P1 incident unresolved after the escalation trigger (typically 30-45 minutes per SLA schedule): escalate from L1 NOC Engineer to L2 Senior NOC, then to L3 Network Engineering if unresolved after a further 15 minutes, and finally to VP Network Operations if the service has not been restored within the MTTR commitment of 4 hours."
+  },
+  {
+    "id": "BQ-011",
+    "mode": "rca",
+    "query": "Packet loss spike to 8% detected on the Dakar-Abidjan backbone link at 23:10 UTC. No alarms on physical layer. MPLS traffic engineering shows the primary LSP is active but utilisation is at 102%. A similar event occurred on INC-000031 last quarter.",
+    "reference": "Root cause: MPLS LSP capacity exhaustion causing tail-drop packet loss. The link is operating above engineered capacity. Historical incident INC-000031 confirms this pattern. Immediate action: trigger LSP re-optimisation or shift traffic to secondary paths. Permanent fix: capacity augmentation."
+  },
+  {
+    "id": "BQ-012",
+    "mode": "recommend",
+    "query": "OSPF adjacency flapping between PE-09 and P-05 in Johannesburg. Flap count is 47 in the last hour. BFD sessions are stable. No physical alarms.",
+    "reference": "Recommended actions: (1) increase OSPF dead interval to reduce sensitivity to transient delays, (2) check for MTU mismatch using 'show ospf neighbor detail' and ping with DF bit set, (3) review CPU utilisation on both nodes for OSPF process starvation, (4) enable OSPF logging to capture specific reason for adjacency loss."
+  },
+  {
+    "id": "BQ-013",
+    "mode": "query",
+    "query": "How many SLA credit tiers are typically defined and what percentage credits apply?",
+    "reference": "SLA schedules typically define two credit tiers: a first tier (e.g. availability drops below 99.5%) triggers a 10% monthly fee credit, and a second tier (e.g. availability drops below 99.0%) triggers a 25% monthly fee credit. Exact thresholds and percentages vary by customer contract."
+  },
+  {
+    "id": "BQ-014",
+    "mode": "summarise",
+    "query": "INC-000102 P2. Node CE-11 Kigali. BGP session drop to upstream PE-06. Duration: 2h 15m. Root cause: ISP upstream route leak advertising more specific prefixes causing CE-11 to prefer a suboptimal path and eventually blackhole traffic. Resolution: applied inbound prefix filter on PE-06 to reject leaked prefixes. Customer impact: 120 users intermittent connectivity. SLA: within threshold, no credit. Lesson: prefix filter validation in quarterly audit.",
+    "reference": "P2 BGP route leak on CE-11 Kigali caused 2h15m degradation for 120 users. Upstream prefix leak resolved by inbound filter on PE-06. No SLA credit triggered. Action item: quarterly prefix filter audit."
+  },
+  {
+    "id": "BQ-015",
+    "mode": "query",
+    "query": "What maintenance notification lead time is required before a planned outage affecting SLA-protected services?",
+    "reference": "The standard maintenance notification lead time for SLA-protected services is 72 hours in advance. Some contracts specify 48 hours as the minimum. Notifications must be sent to all affected customers and recorded in the change management system before the maintenance window begins."
+  },
+  {
+    "id": "BQ-016",
+    "mode": "rca",
+    "query": "Power supply failure alarm on PE-12 Addis Ababa at 08:44 UTC. The node has dual power supplies. PSU-B is now active. Temperature alarms followed 10 minutes later. No traffic impact currently but node is running in degraded mode.",
+    "reference": "Root cause: single power supply failure on PE-12. The node has failed over to PSU-B successfully with no traffic impact. However, the subsequent temperature alarms indicate the failed PSU may have contributed to reduced cooling capacity. Risk is elevated — hardware replacement of the failed PSU should be prioritised within 24 hours."
+  },
+  {
+    "id": "BQ-017",
+    "mode": "generate_article",
+    "query": "INC-000117 resolved. OSPF adjacency loss between PE-05 and P-03 caused by MTU mismatch after a port card replacement. The new port card defaulted to 1500-byte MTU while the network standard is 9000-byte jumbo frames. Resolution: configured 'ip mtu 9000' and 'ip ospf mtu-ignore' on the affected interface. Prevention: include MTU validation in hardware replacement post-checks.",
+    "reference": "KB article: OSPF adjacency loss due to MTU mismatch after hardware replacement. Symptom: adjacency in EXSTART/EXCHANGE state. Diagnosis: 'show ospf interface' MTU field. Resolution: set ip mtu 9000. Prevention: MTU validation in hardware replacement checklist."
+  },
+  {
+    "id": "BQ-018",
+    "mode": "query",
+    "query": "What is the difference between a P1 and P2 incident in terms of MTTR commitment?",
+    "reference": "A P1 (Critical) incident has an MTTR commitment of 4 hours from fault notification. A P2 (Major) incident has an MTTR commitment of 8 hours. P3 (Minor) incidents must be resolved within 24 hours. These thresholds are defined in the SLA schedule and trigger escalation procedures if breached."
+  },
+  {
+    "id": "BQ-019",
+    "mode": "recommend",
+    "query": "NTP synchronisation loss on PE-03 and PE-07. Both nodes are now stratum 16 (unsynchronised). Timing-sensitive MPLS services are at risk. SLA availability: 99.99%.",
+    "reference": "Immediate actions: (1) verify NTP server reachability from both PEs, (2) check if NTP server itself is reachable and synchronised, (3) configure backup NTP sources, (4) if NTP unavailable > 15 minutes, evaluate impact on SONET/SDH or PTP timing services and consider proactive customer notification given 99.99% SLA."
+  },
+  {
+    "id": "BQ-020",
+    "mode": "rca",
+    "query": "DNS resolution failures reported by 500 enterprise customers in the Cairo region starting 16:30 UTC. No alarms on backbone infrastructure. CE-09 syslog shows repeated SERVFAIL responses. A configuration backup was pushed to all Cairo CE nodes at 15:45 UTC.",
+    "reference": "Root cause: configuration backup push at 15:45 UTC likely introduced an incorrect DNS forwarder address or ACL on CE-09, causing SERVFAIL responses. The timing correlation (45 minutes between config push and failure onset, accounting for cache TTL expiry) is the primary evidence. Rollback the configuration backup on CE-09 to restore DNS forwarding."
+  }
+]

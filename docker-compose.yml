@@ -1,0 +1,88 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# NOIA Docker Compose — local development and demo stack
+# Usage: docker compose up --build
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── NOIA API backend ────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: noia-api
+    env_file: .env
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - CHROMA_PERSIST_DIR=/app/data/chroma
+      - BM25_INDEX_PATH=/app/data/bm25_index.pkl
+      - AUDIT_DB_PATH=/app/data/audit.db
+      - LOG_FORMAT=json
+    ports:
+      - "8000:8000"
+    volumes:
+      - noia-data:/app/data
+      - noia-models:/app/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    restart: unless-stopped
+    networks:
+      - noia-net
+
+  # ── React NOC frontend ──────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    container_name: noia-frontend
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+    ports:
+      - "5173:5173"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - noia-net
+
+  # ── One-shot corpus ingestion ───────────────────────────────────────────────
+  ingest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: noia-ingest
+    env_file: .env
+    environment:
+      - CHROMA_PERSIST_DIR=/app/data/chroma
+      - BM25_INDEX_PATH=/app/data/bm25_index.pkl
+      - CORPUS_DIR=/app/data/corpus
+    volumes:
+      - noia-data:/app/data
+    command: >
+      sh -c "
+        python -m noia.ingestion.corpus_builder --output /app/data/corpus --count 500 &&
+        python -m noia.ingestion.ingest_pipeline --corpus-dir /app/data/corpus
+      "
+    profiles:
+      - ingest
+    networks:
+      - noia-net
+
+volumes:
+  noia-data:
+    driver: local
+  noia-models:
+    driver: local
+
+networks:
+  noia-net:
+    driver: bridge
